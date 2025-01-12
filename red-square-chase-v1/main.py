@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Author: Victor V. R. Matos (@vvrmatos)
+# Author: Victor V. R. Matos (@vvrmatos) & Little Blue Square
 # Description: This script implements a simple game using Pygame where the player controls
 #              a blue square, which must collect red squares to increase the score. The blue
 #              square moves horizontally based on keyboard input, and red squares are generated
@@ -27,7 +27,7 @@ x_position = WIDTH // 2
 y_position = HEIGHT // 2
 initial_position = (x_position, y_position)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Little Blue Square")
+pygame.display.set_caption("Red Square Chase")
 icon = pygame.image.load("icon.png")
 pygame.display.set_icon(icon)
 score = 0
