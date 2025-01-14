@@ -11,9 +11,14 @@
 import sys
 import pygame
 
+from pathlib import Path
 from random import randint
+from menu import show_logo_menu
 
 pygame.init()
+
+
+file_path = Path(__file__).parent.parent / "src"
 
 # Colors
 BLACK = (0, 0, 0)
@@ -25,10 +30,9 @@ WHITE = (250, 250, 250)
 WIDTH, HEIGHT = 600, 400
 x_position = WIDTH // 2
 y_position = HEIGHT // 2
-initial_position = (x_position, y_position)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Red Square Chase")
-icon = pygame.image.load("icon.png")
+icon = pygame.image.load(file_path / "icon.png")
 pygame.display.set_icon(icon)
 score = 0
 
@@ -63,36 +67,43 @@ def draw_red_square():
 
 
 def write_score():
-    font = pygame.font.Font("PressStart2P.ttf", 18)
+    font = pygame.font.Font(file_path / "PressStart2P.ttf", 18)
     text = font.render("{}".format(score), True, BLACK)
     render_position = (20, 20)
     screen.blit(text, render_position)
 
 
 # Main Loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+def main_game():
+    global x_position, red_x_position, score
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
-    # Screen Actions
-    screen.fill(WHITE)
-    draw_blue_square()
-    draw_red_square()
-    write_score()
+        # Screen Actions
+        screen.fill(WHITE)
+        draw_blue_square()
+        draw_red_square()
+        write_score()
 
-    # Key Events
-    keys = pygame.key.get_pressed()
+        # Key Events
+        keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_LEFT] and x_position > 0:
-        x_position -= speed
-    if keys[pygame.K_RIGHT] and x_position < WIDTH - blue_square_size:
-        x_position += speed
-    if red_x_position + red_square_size > x_position > red_x_position - blue_square_size:
-        red_x_position = 0
-        score += 1
+        if keys[pygame.K_LEFT] and x_position > 0:
+            x_position -= speed
+        if keys[pygame.K_RIGHT] and x_position < WIDTH - blue_square_size:
+            x_position += speed
+        if red_x_position + red_square_size > x_position > red_x_position - blue_square_size:
+            red_x_position = 0
+            score += 1
 
-    pygame.display.flip()
-    clock.tick(60)
+        pygame.display.flip()
+        clock.tick(60)
+
+
+if __name__ == "__main__":
+    show_logo_menu(screen, clock)
+    main_game()
