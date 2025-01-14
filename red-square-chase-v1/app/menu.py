@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Author: Victor V. R. Matos (@vvrmatos) & Little Blue Square
+# Description: This script implements a simple game using Pygame where the player controls
+#              a blue square, which must collect red squares to increase the score. The blue
+#              square moves horizontally based on keyboard input, and red squares are generated
+#              at random positions on the screen.
+# License: CC0 1.0 Universal
+
 import sys
 import pygame
 
