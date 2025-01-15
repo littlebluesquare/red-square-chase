@@ -21,10 +21,10 @@ pygame.init()
 file_path = Path(__file__).parent.parent / "src"
 
 # Colors
-BLACK = (0, 0, 0)
-BLUE = (0, 0, 250)
-RED = (250, 0, 0)
-WHITE = (250, 250, 250)
+BLACK = pygame.color.Color((0, 0, 0))
+BLUE  = pygame.color.Color((0, 0, 250))
+RED   = pygame.color.Color((250, 0, 0))
+WHITE = pygame.color.Color((250, 250, 250))
 
 # Screen Set
 WIDTH, HEIGHT = 600, 400
@@ -73,6 +73,12 @@ def write_score():
     screen.blit(text, render_position)
 
 
+def reset():
+    global score
+    score = 0
+    show_logo_menu(screen, clock)
+    main_game()
+
 # Main Loop
 def main_game():
     global x_position, red_x_position, score
@@ -99,6 +105,8 @@ def main_game():
         if red_x_position + red_square_size > x_position > red_x_position - blue_square_size:
             red_x_position = 0
             score += 1
+        if keys[pygame.K_r]:
+            reset()
 
         pygame.display.flip()
         clock.tick(60)
