@@ -37,10 +37,18 @@ pygame.display.set_icon(icon)
 score = 0
 
 # Sprite Set
+
+# Blue square
 blue_square_size = 40
-red_square_size = blue_square_size // 2
-red_x_position = 0
+blue_square_x_position = x_position
+blue_square_y_position = y_position
+blue_square_width = 5
 speed = 3
+
+# Red square
+red_square_size = blue_square_size // 2
+red_square_x_position = 0
+red_square_width = blue_square_width - 1
 
 # Time For FPS Control
 clock = pygame.time.Clock()
@@ -49,21 +57,22 @@ clock = pygame.time.Clock()
 def generate_random_position():
     while True:
         random_x_position = randint(0, WIDTH - red_square_size)
-        if random_x_position + red_square_size < x_position or random_x_position > x_position + blue_square_size:
+        if (random_x_position + red_square_size < blue_square_x_position or
+            random_x_position > blue_square_x_position + blue_square_size):
             return random_x_position
 
 
 def draw_blue_square():
-    pygame.draw.rect(surface=screen, color=BLUE, rect=(x_position, y_position, blue_square_size, blue_square_size),
-                     width=5)
+    pygame.draw.rect(surface=screen, color=BLUE, rect=(blue_square_x_position, blue_square_y_position,
+                                                       blue_square_size, blue_square_size), width=blue_square_width)
 
 
 def draw_red_square():
-    global red_x_position
-    if not red_x_position:
-        red_x_position = generate_random_position()
-    pygame.draw.rect(surface=screen, color=RED,
-                     rect=(red_x_position, y_position + red_square_size, red_square_size, red_square_size), width=4)
+    global red_square_x_position
+    if not red_square_x_position:
+        red_square_x_position = generate_random_position()
+    pygame.draw.rect(surface=screen, color=RED, rect=(red_square_x_position, blue_square_y_position + red_square_size,
+                                                      red_square_size, red_square_size), width=red_square_width)
 
 
 def write_score():
@@ -81,7 +90,7 @@ def reset():
 
 # Main Loop
 def main_game():
-    global x_position, red_x_position, score
+    global blue_square_x_position, red_square_x_position, score
     running = True
     while running:
         for event in pygame.event.get():
@@ -98,12 +107,12 @@ def main_game():
         # Key Events
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT] and x_position > 0:
-            x_position -= speed
-        if keys[pygame.K_RIGHT] and x_position < WIDTH - blue_square_size:
-            x_position += speed
-        if red_x_position + red_square_size > x_position > red_x_position - blue_square_size:
-            red_x_position = 0
+        if keys[pygame.K_LEFT] and blue_square_x_position > 0:
+            blue_square_x_position -= speed
+        if keys[pygame.K_RIGHT] and blue_square_x_position < WIDTH - blue_square_size:
+            blue_square_x_position += speed
+        if red_square_x_position + red_square_size > blue_square_x_position > red_square_x_position - blue_square_size:
+            red_square_x_position = 0
             score += 1
         if keys[pygame.K_r]:
             reset()
