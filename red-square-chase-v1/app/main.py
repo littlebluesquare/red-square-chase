@@ -10,13 +10,11 @@
 
 import sys
 import pygame
-
 from pathlib import Path
 from random import randint
 from menu import show_logo_menu
 
 pygame.init()
-
 
 file_path = Path(__file__).parent.parent / "src"
 
@@ -37,20 +35,16 @@ pygame.display.set_icon(icon)
 score = 0
 
 # Sprite Set
-
-# Blue square
 blue_square_size = 40
 blue_square_x_position = x_position
 blue_square_y_position = y_position
 blue_square_width = 5
 speed = 3
 
-# Red square
 red_square_size = blue_square_size // 2
 red_square_x_position = 0
 red_square_width = blue_square_width - 1
 
-# Time For FPS Control
 clock = pygame.time.Clock()
 
 
@@ -85,7 +79,7 @@ def write_score():
 def reset():
     global score
     score = 0
-    show_logo_menu(screen, clock)
+    show_logo_menu(screen, clock)  # Show the logo menu when resetting
     main_game()
 
 # Main Loop

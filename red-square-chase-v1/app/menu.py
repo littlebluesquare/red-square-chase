@@ -10,7 +10,6 @@
 
 import sys
 import pygame
-
 from pathlib import Path
 
 file_path = Path(__file__).parent.parent / "src"
@@ -18,7 +17,6 @@ file_path = Path(__file__).parent.parent / "src"
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-
 
 # Function for the logo menu
 def show_logo_menu(screen, clock):
@@ -46,7 +44,6 @@ def show_logo_menu(screen, clock):
 
         if logo_alpha < 250:
             logo_alpha += 2
-
         else:
             pygame.time.wait(3000)
             return
