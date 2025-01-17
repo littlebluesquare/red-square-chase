@@ -20,6 +20,11 @@ WHITE = (255, 255, 255)
 
 # Function for the logo menu
 def show_logo_menu(screen, clock):
+    # Load and play the extra song for the theme
+    pygame.mixer.music.load(file_path / "sound-track" / "little-blue-square-theme-song.aif")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1)
+
     # Load logo
     logo = pygame.image.load(file_path / "logo.png")
     logo = pygame.transform.scale(logo, (400, 300))
@@ -40,12 +45,15 @@ def show_logo_menu(screen, clock):
                 pygame.quit()
                 sys.exit()
             if keys[pygame.K_RETURN]:
+                pygame.mixer.music.stop()
                 return
 
         if logo_alpha < 250:
-            logo_alpha += 2
+            logo_alpha += 1.3
         else:
-            pygame.time.wait(3000)
+            pygame.time.wait(6000)
+            pygame.mixer.music.stop()
+            pygame.time.wait(1000)
             return
 
         # Set logo transparency

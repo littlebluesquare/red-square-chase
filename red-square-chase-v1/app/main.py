@@ -10,11 +10,14 @@
 
 import sys
 import pygame
+
 from pathlib import Path
+from random import choice
 from random import randint
 from menu import show_logo_menu
 
 pygame.init()
+pygame.mixer.init()
 
 file_path = Path(__file__).parent.parent / "src"
 
@@ -46,6 +49,14 @@ red_square_x_position = 0
 red_square_width = blue_square_width - 1
 
 clock = pygame.time.Clock()
+
+# Load sound effects
+hit_sounds_folder = file_path / "sound-track" / "hit"
+hit_sounds = [pygame.mixer.Sound(file) for file in hit_sounds_folder.glob("*.aif")]
+
+for sound in hit_sounds:
+    sound.set_volume(0.4)
+
 
 
 def generate_random_position():
@@ -84,6 +95,11 @@ def reset():
 
 # Main Loop
 def main_game():
+    # Load game theme
+    pygame.mixer.music.load(file_path/ "sound-track" / "red-square-chase.aif")
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+
     global blue_square_x_position, red_square_x_position, score
     running = True
     while running:
@@ -105,9 +121,15 @@ def main_game():
             blue_square_x_position -= speed
         if keys[pygame.K_RIGHT] and blue_square_x_position < WIDTH - blue_square_size:
             blue_square_x_position += speed
+
+        # Collision detection
         if red_square_x_position + red_square_size > blue_square_x_position > red_square_x_position - blue_square_size:
-            red_square_x_position = 0
+            random_hit_sound = choice(hit_sounds)
+            random_hit_sound.play()
+
+            red_square_x_position = 0  # Reset red square position
             score += 1
+
         if keys[pygame.K_r]:
             reset()
 
