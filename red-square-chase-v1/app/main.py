@@ -42,7 +42,7 @@ blue_square_size = 40
 blue_square_x_position = x_position
 blue_square_y_position = y_position
 blue_square_width = 5
-speed = 3
+speed = 3.141592
 
 red_square_size = blue_square_size // 2
 red_square_x_position = 0
@@ -56,7 +56,6 @@ hit_sounds = [pygame.mixer.Sound(file) for file in hit_sounds_folder.glob("*.aif
 
 for sound in hit_sounds:
     sound.set_volume(0.4)
-
 
 
 def generate_random_position():
@@ -127,7 +126,7 @@ def main_game():
             random_hit_sound = choice(hit_sounds)
             random_hit_sound.play()
 
-            red_square_x_position = 0  # Reset red square position
+            red_square_x_position = 0
             score += 1
 
         if keys[pygame.K_r]:
